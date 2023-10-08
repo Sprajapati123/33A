@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'dashboard/dashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.red)),
-        home: TestScreen());
+        home: DashBoard());
   }
 }
 
@@ -47,6 +51,40 @@ class _TestScreenState extends State<TestScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              height: 200,
+
+              width: MediaQuery.of(context).size.width,
+              child: Stack(children: [
+                Container(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+
+                  decoration: const BoxDecoration(
+                      color: Colors.pink,
+                      borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20)
+                  )),
+                ),
+                const Positioned(
+                  height: 80,
+                  left: 20,
+                  right: 20,
+                  top: 60,
+                  child: Card(
+                    child: ListTile(
+                        trailing: Icon(Icons.check_circle),
+                        title: Text("Ram shrestha"),
+                        subtitle: Text("Hello, Ram Shrestha"),
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage("assets/images/test.jpeg"),
+                        )),
+                  ),
+                ),
+              ]),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -67,14 +105,6 @@ class _TestScreenState extends State<TestScreen> {
                 ),
               ],
             ),
-            ListTile(
-              trailing: Icon(Icons.check_circle),
-              title: Text("Ram shrestha"),
-                subtitle: Text("Hello, Ram Shrestha"),
-                leading: CircleAvatar(
-
-              backgroundImage: AssetImage("assets/images/test.jpeg"),
-            )),
             Image.asset('assets/images/test.jpeg'),
             Container(
               height: 100,
