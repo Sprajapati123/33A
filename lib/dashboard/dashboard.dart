@@ -103,7 +103,8 @@ class _DashBoardState extends State<DashBoard> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,7 +131,7 @@ class _DashBoardState extends State<DashBoard> {
                     "Institution",
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
-                  Text(
+                  const Text(
                     "Bio .............................",
                     style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
@@ -148,11 +149,11 @@ class _DashBoardState extends State<DashBoard> {
                   ...List.generate(
                     20,
                     (index) => Padding(
-                      padding:
-                          EdgeInsets.only(right: 10.0, left: index == 0 ? 10 : 0),
+                      padding: EdgeInsets.only(
+                          right: 10.0, left: index == 0 ? 10 : 0),
                       child: Column(
-                        children: [
-                          const CircleAvatar(
+                        children: const [
+                          CircleAvatar(
                             radius: 30,
                             backgroundImage:
                                 AssetImage("assets/images/test.jpeg"),
@@ -169,22 +170,9 @@ class _DashBoardState extends State<DashBoard> {
               ),
             ),
 
-            const SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: GridView.count(
-                  physics: const ScrollPhysics(),
-                  shrinkWrap: true,
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 8.0,
-                  children: List.generate(100, (index)=>  Container(
-                    height: 100,
-                    width: 100,
-                    child: Image.asset("assets/images/test.jpeg",fit: BoxFit.cover),
-                  ),)),
-            )
-
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

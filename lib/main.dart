@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:batch_33a/route/route_generator.dart';
+import 'package:batch_33a/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.red)),
-        home: DashBoard());
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(appBarTheme: const AppBarTheme(color: Colors.red)),
+      initialRoute: SplashScreen.routeName,
+      onGenerateRoute: RouteGenerator.generateRoute,
+    );
   }
 }
 
@@ -53,19 +57,16 @@ class _TestScreenState extends State<TestScreen> {
           children: [
             Container(
               height: 200,
-
               width: MediaQuery.of(context).size.width,
               child: Stack(children: [
                 Container(
                   height: 100,
                   width: MediaQuery.of(context).size.width,
-
                   decoration: const BoxDecoration(
                       color: Colors.pink,
                       borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)
-                  )),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20))),
                 ),
                 const Positioned(
                   height: 80,
