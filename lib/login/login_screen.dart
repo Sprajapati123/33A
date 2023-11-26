@@ -22,12 +22,18 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              "assets/images/login.jpg",
-              height: 300,
-              width: 300,
+            Center(
+              child: Image.asset(
+                "assets/images/login.jpg",
+                height: 300,
+                width: 300,
+              ),
             ),
+            const Text("Email",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17)),
+
             TextFormField(
               validator: (String? value) {
                 if (value == "") {
@@ -37,6 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               decoration: InputDecoration(
                 hintText: "Enter email",
+
+                labelStyle: TextStyle(color: Colors.black),
                 prefixIcon: Icon(Icons.mail,color: Colors.grey.shade500),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -49,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: _emailController,
             ),
+
             // ElevatedButton(
             //     onPressed: () {
             //       print(_emailController.text);
