@@ -7,13 +7,11 @@ class RouteGenerator {
     final arg = settings.arguments;
 
     switch (settings.name) {
-
       case SplashScreen.routeName:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case LoginScreen.routeName:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
-
 
       default:
         _onPageNotFound();

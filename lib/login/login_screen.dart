@@ -14,28 +14,48 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Login Screen"),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
       ),
-      body: Column(
-        children: [
-          TextFormField(
-            validator: (String? value) {
-              if (value == "") {
-                return "Enter text";
-              }
-              return null;
-            },
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: _emailController,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                print(_emailController.text);
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            Image.asset(
+              "assets/images/login.jpg",
+              height: 300,
+              width: 300,
+            ),
+            TextFormField(
+              validator: (String? value) {
+                if (value == "") {
+                  return "Enter text";
+                }
+                return null;
               },
-              child: Text("Submit"))
-        ],
+              decoration: InputDecoration(
+                hintText: "Enter email",
+                prefixIcon: Icon(Icons.mail,color: Colors.grey.shade500),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Colors.grey, width: 1)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide:
+                        const BorderSide(color: Colors.green, width: 1)),
+              ),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              controller: _emailController,
+            ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       print(_emailController.text);
+            //     },
+            //     child: Text("Submit"))
+          ],
+        ),
       ),
     );
   }
