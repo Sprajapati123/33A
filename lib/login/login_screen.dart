@@ -11,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool visibility = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,51 +20,81 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Image.asset(
-                "assets/images/login.jpg",
-                height: 300,
-                width: 300,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Image.asset(
+                  "assets/images/login.jpg",
+                  height: 300,
+                  width: 300,
+                ),
               ),
-            ),
-            const Text("Email",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17)),
 
-            TextFormField(
-              validator: (String? value) {
-                if (value == "") {
-                  return "Enter text";
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                hintText: "Enter email",
-
-                labelStyle: TextStyle(color: Colors.black),
-                prefixIcon: Icon(Icons.mail,color: Colors.grey.shade500),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.grey, width: 1)),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide:
-                        const BorderSide(color: Colors.green, width: 1)),
+              const Text("Email",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              const SizedBox(
+                height: 10,
               ),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: _emailController,
-            ),
-
-            // ElevatedButton(
-            //     onPressed: () {
-            //       print(_emailController.text);
-            //     },
-            //     child: Text("Submit"))
-          ],
+              TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                controller: _emailController,
+                decoration: InputDecoration(
+                  hintText: "Enter email",
+                  prefixIcon: Icon(Icons.mail),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Colors.grey, width: 1),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Colors.grey, width: 1),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("Password",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: visibility,
+                decoration: InputDecoration(
+                  hintText: "Enter password",
+                  suffixIcon: IconButton(
+                    icon: visibility ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        visibility = !visibility;
+                      });
+                    },
+                  ),
+                  prefixIcon: Icon(Icons.key),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Colors.grey, width: 1),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Colors.grey, width: 1),
+                  ),
+                ),
+              ),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       print(_emailController.text);
+              //     },
+              //     child: Text("Submit"))
+            ],
+          ),
         ),
       ),
     );
