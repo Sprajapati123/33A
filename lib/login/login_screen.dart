@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   hintText: "Enter email",
-                  prefixIcon: Icon(Icons.mail),
+                  prefixIcon: const Icon(Icons.mail),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide(color: Colors.grey, width: 1),
@@ -70,7 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   hintText: "Enter password",
                   suffixIcon: IconButton(
-                    icon: visibility ? Icon(Icons.visibility) : Icon(Icons.visibility_off),
+                    icon: visibility
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
                     onPressed: () {
                       setState(() {
                         visibility = !visibility;
@@ -88,11 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              // ElevatedButton(
-              //     onPressed: () {
-              //       print(_emailController.text);
-              //     },
-              //     child: Text("Submit"))
+
             ],
           ),
         ),
