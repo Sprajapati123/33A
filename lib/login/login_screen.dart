@@ -1,3 +1,5 @@
+import 'package:batch_33a/registraion/registration_screen.dart';
+import 'package:batch_33a/widgets/common_text_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -34,27 +36,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 300,
                 ),
               ),
-
               const Text("Email",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
+              CommonTextField(
                 controller: _emailController,
-                decoration: InputDecoration(
-                  hintText: "Enter email",
-                  prefixIcon: const Icon(Icons.mail),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                ),
+                prefixIcon: const Icon(Icons.mail),
+                hintText: "Enter email",
               ),
               const SizedBox(
                 height: 20,
@@ -64,32 +54,36 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: visibility,
-                decoration: InputDecoration(
+              CommonTextField(
+                  controller: _passwordController,
                   hintText: "Enter password",
                   suffixIcon: IconButton(
                     icon: visibility
-                        ? Icon(Icons.visibility)
-                        : Icon(Icons.visibility_off),
+                        ? const Icon(Icons.visibility)
+                        : const Icon(Icons.visibility_off),
                     onPressed: () {
                       setState(() {
                         visibility = !visibility;
                       });
                     },
                   ),
-                  prefixIcon: Icon(Icons.key),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Colors.grey, width: 1),
-                  ),
-                ),
+                  prefixIcon: Icon(Icons.key)),
+
+              SizedBox(height: 20,),
+              Container(
+                width: 500,
+                child: ElevatedButton(onPressed: (){
+
+                }, child: Text("Login")),
               ),
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, RegistrationScreen.routeName);
+                      },
+                      child: Text("Register now"))),
+
 
             ],
           ),

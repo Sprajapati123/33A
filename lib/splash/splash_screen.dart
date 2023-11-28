@@ -1,4 +1,5 @@
 import 'package:batch_33a/login/login_screen.dart';
+import 'package:batch_33a/navigation/navigation.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // }else{
       //   navigate to login
       // }
-      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      Navigator.pushReplacementNamed(context, NavigationScreen.routeName);
     });
   }
 
