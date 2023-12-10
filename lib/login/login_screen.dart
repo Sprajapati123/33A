@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:batch_33a/registraion/registration_screen.dart';
 import 'package:batch_33a/widgets/common_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,11 +14,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool visibility = true;
-
+  FirebaseAuth auth = FirebaseAuth.instance;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Center(
                 child: Image.asset(
                   "assets/images/login.jpg",
@@ -81,11 +79,42 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 width: 500,
-                child:  ElevatedButton(
-                onPressed: () async {
+                child: ElevatedButton(
+                    onPressed: () async {}, child: Text("Login")),
+              ),
+              Container(
+                width: 500,
+                child: isLoading == true
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          try {
+                            final user =
+                                await auth.createUserWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text);
 
-                },
-                child: Text("Login")),
+                            if (user.user != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text("Register succesfull")));
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+                          } on Exception catch (e) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                            // TODO
+                          }
+                        },
+                        child: Text("Register")),
               ),
               Align(
                   alignment: Alignment.centerRight,
