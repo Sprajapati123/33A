@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:batch_33a/registraion/registration_screen.dart';
 import 'package:batch_33a/widgets/common_text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,9 +15,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool visibility = true;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Center(
                 child: Image.asset(
                   "assets/images/login.jpg",
@@ -68,23 +76,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   prefixIcon: Icon(Icons.key)),
-
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Container(
                 width: 500,
-                child: ElevatedButton(onPressed: (){
+                child:  ElevatedButton(
+                onPressed: () async {
 
-                }, child: Text("Login")),
+                },
+                child: Text("Login")),
               ),
               Align(
                   alignment: Alignment.centerRight,
                   child: InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, RegistrationScreen.routeName);
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, RegistrationScreen.routeName);
                       },
                       child: Text("Register now"))),
-
-
             ],
           ),
         ),

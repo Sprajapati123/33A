@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // }else{
       //   navigate to login
       // }
-      Navigator.pushReplacementNamed(context, NavigationScreen.routeName);
+      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
     });
   }
 

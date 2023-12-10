@@ -2,12 +2,17 @@ import 'dart:math';
 
 import 'package:batch_33a/route/route_generator.dart';
 import 'package:batch_33a/splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'dashboard/dashboard.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+   );
   runApp(MyApp());
 }
 
