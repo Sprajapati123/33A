@@ -1,3 +1,4 @@
+import 'package:batch_33a/form/form_screen.dart';
 import 'package:batch_33a/login/login_screen.dart';
 import 'package:batch_33a/navigation/navigation.dart';
 import 'package:batch_33a/registraion/registration_screen.dart';
@@ -17,6 +18,9 @@ class RouteGenerator {
 
       case RegistrationScreen.routeName:
         return MaterialPageRoute(builder: (_) => const RegistrationScreen());
+
+      case FormScreen.routeName:
+        return MaterialPageRoute(builder: (_) => const FormScreen());
 
       case NavigationScreen.routeName:
         return MaterialPageRoute(builder: (_) => const NavigationScreen());
