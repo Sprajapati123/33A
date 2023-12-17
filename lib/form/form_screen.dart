@@ -36,7 +36,11 @@ class _FormScreenState extends State<FormScreen> {
               "lastname": lnameController.text,
               "email": emailController.text,
             };
-            await database.ref().push().child("contact").set(data);
+            await database.ref().child("contact").push().set(data).then((value) {
+              print("Success");
+            }).onError((error, stackTrace) {
+              print(error.toString());
+            });
           }, child: Text("Submit"))
         ],
       ),
