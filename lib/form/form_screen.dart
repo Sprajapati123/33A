@@ -18,44 +18,83 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Registration form"),),
+      appBar: AppBar(
+        title: Text("Registration form"),
+      ),
       body: Form(
         key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("first name"),
-            TextFormField(
-              validator: (value){
-                if(value == ""){
-                  return "enter text";
-                }
-                return null;
-              },
-                controller: fnameController),
-            Text("last name"),
-            TextFormField(controller: lnameController),
-            Text("email"),
-            TextFormField(controller: emailController),
-
-            ElevatedButton(onPressed: () async{
-              if(formKey.currentState!.validate()){
-                var data = {
-                  "firstname": fnameController.text,
-                  "lastname": lnameController.text,
-                  "email": emailController.text,
-
-                };
-                await database.ref().child("contact").push().set(data).then((value) {
-                  print("Success");
-                }).onError((error, stackTrace) {
-                  print(error.toString());
-                });
-              }
-
-            }, child: Text("Submit"))
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StreamBuilder(
+                  stream: database.ref('contact').onValue, builder: (context, snapshot) {
+          
+                    Map<dynamic,dynamic> datas = snapshot.data!.snapshot.value as dynamic;
+                    List<dynamic> values = datas.values.toList();
+          
+                    return Column(
+                      children: [
+                        ...List.generate(values.length, (index) {
+                          return ListTile(
+                            title: Text(values[index]['email']),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                              IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                            ],
+                          )
+                          );
+                        })
+                      ],
+                    );
+                  },),
+          
+              Text("first name"),
+              TextFormField(
+                  validator: (value) {
+                    if (value == "") {
+                      return "enter text";
+                    }
+                    return null;
+                  },
+                  controller: fnameController),
+              Text("last name"),
+              TextFormField(controller: lnameController),
+              Text("email"),
+              TextFormField(controller: emailController),
+          
+              ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      var data = {
+                        "firstname": fnameController.text,
+                        "lastname": lnameController.text,
+                        "email": emailController.text,
+                      };
+                      await database
+                          .ref()
+                          .child("contact")
+                          .push()
+                          .set(data)
+                          .then((value) {
+                        print("Success");
+                      }).onError((error, stackTrace) {
+                        print(error.toString());
+                      });
+                    }
+                  },
+                  child: Text("Submit")),
+          
+              ///
+              ///Futurebuilder
+              ///
+              ///Streambuilder
+              ///
+            ],
+          ),
         ),
       ),
     );
