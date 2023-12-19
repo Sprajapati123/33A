@@ -29,29 +29,55 @@ class _FormScreenState extends State<FormScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               StreamBuilder(
-                  stream: database.ref('contact').onValue, builder: (context, snapshot) {
-          
-                    Map<dynamic,dynamic> datas = snapshot.data!.snapshot.value as dynamic;
-                    List<dynamic> values = datas.values.toList();
-          
-                    return Column(
-                      children: [
-                        ...List.generate(values.length, (index) {
-                          return ListTile(
-                            title: Text(values[index]['email']),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
-                              IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
-                            ],
-                          )
-                          );
-                        })
-                      ],
-                    );
-                  },),
-          
+                stream: database.ref('contact').onValue,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if(snapshot.data!.snapshot.value == null){
+                      return Text("No data found");
+                    }else{
+                      Map<dynamic, dynamic> datas =
+                      snapshot.data!.snapshot.value as dynamic;
+                      List<dynamic> values = datas.values.toList();
+                      List<dynamic> keys = datas.keys.toList();
+                      return Column(
+                        children: [
+                          ...List.generate(values.length, (index) {
+                            return ListTile(
+                                title: Text(values[index]['email']),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {}, icon: Icon(Icons.edit)),
+                                    IconButton(
+                                        onPressed: () async {
+                                          await database
+                                              .ref('contact')
+                                              .child(keys[index])
+                                              .remove()
+                                              .then((value) {
+                                            // show success message to user
+                                          }).onError((error, stackTrace) {
+                                            //show error to user
+                                          });
+                                        },
+                                        icon: Icon(Icons.delete)),
+                                  ],
+                                ));
+                          })
+                        ],
+                      );
+                    }
+
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  return Align(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator());
+                },
+              ),
+
               Text("first name"),
               TextFormField(
                   validator: (value) {
@@ -65,7 +91,7 @@ class _FormScreenState extends State<FormScreen> {
               TextFormField(controller: lnameController),
               Text("email"),
               TextFormField(controller: emailController),
-          
+
               ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
@@ -80,14 +106,16 @@ class _FormScreenState extends State<FormScreen> {
                           .push()
                           .set(data)
                           .then((value) {
-                        print("Success");
+                        fnameController.clear();
+                        lnameController.clear();
+                        emailController.clear();
                       }).onError((error, stackTrace) {
                         print(error.toString());
                       });
                     }
                   },
                   child: Text("Submit")),
-          
+
               ///
               ///Futurebuilder
               ///
