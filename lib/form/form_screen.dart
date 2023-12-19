@@ -32,11 +32,11 @@ class _FormScreenState extends State<FormScreen> {
                 stream: database.ref('contact').onValue,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    if(snapshot.data!.snapshot.value == null){
+                    if (snapshot.data!.snapshot.value == null) {
                       return Text("No data found");
-                    }else{
+                    } else {
                       Map<dynamic, dynamic> datas =
-                      snapshot.data!.snapshot.value as dynamic;
+                          snapshot.data!.snapshot.value as dynamic;
                       List<dynamic> values = datas.values.toList();
                       List<dynamic> keys = datas.keys.toList();
                       return Column(
@@ -48,7 +48,37 @@ class _FormScreenState extends State<FormScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     IconButton(
-                                        onPressed: () {}, icon: Icon(Icons.edit)),
+                                        onPressed: () async {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title: Text("Edit data"),
+                                              content: Container(
+                                                height: 600,
+                                                child: Column(
+                                                  children: [
+                                                    Text("first name"),
+                                                    TextFormField(
+                                                        validator: (value) {
+                                                          if (value == "") {
+                                                            return "enter text";
+                                                          }
+                                                          return null;
+                                                        },
+                                                        controller: fnameController),
+                                                    Text("last name"),
+                                                    TextFormField(controller: lnameController),
+                                                    Text("email"),
+                                                    TextFormField(controller: emailController),
+
+                                                    ElevatedButton(onPressed: (){}, child: Text("update")),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        icon: Icon(Icons.edit)),
                                     IconButton(
                                         onPressed: () async {
                                           await database
@@ -68,7 +98,6 @@ class _FormScreenState extends State<FormScreen> {
                         ],
                       );
                     }
-
                   } else if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   }
