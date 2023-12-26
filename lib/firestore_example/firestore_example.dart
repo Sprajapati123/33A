@@ -45,9 +45,46 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                       .map((DocumentSnapshot e) => ListTile(
                             title: Text(e['email']),
                             subtitle: Text(e['firstname']),
-                    trailing: IconButton(icon: Icon(Icons.delete),onPressed: (){
-                      firestore.collection('users').doc(e.id).delete();
-                    }),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+
+                                IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      setState(() {
+                                        emailController.text = e['email'];
+                                      });
+                                      showDialog(context: context, builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("Edit"),
+                                          content: Container(
+                                            height: 500,
+                                            child: Column(
+                                              children: [
+                                                TextFormField(controller: emailController,),
+                                              ElevatedButton(onPressed: (){
+                                                var data = {
+                                                  "email": emailController.text,
+                                                };
+                                                firestore.collection('users').doc(e.id).update(data);
+                                              }, child: Text("Submit"))
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },);
+                                    }),
+                                IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      firestore
+                                          .collection('users')
+                                          .doc(e.id)
+                                          .delete();
+                                    }),
+                              ],
+                            ),
                           ))
                       .toList(),
                 );
@@ -58,8 +95,6 @@ class _FireStoreExampleState extends State<FireStoreExample> {
             Text("last name"),
             TextFormField(controller: lnameController),
             Text("email"),
-
-
 
             TextFormField(controller: emailController),
             ElevatedButton(
