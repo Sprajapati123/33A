@@ -1,3 +1,4 @@
+import 'package:batch_33a/firestore_example/firestore_example.dart';
 import 'package:batch_33a/form/form_screen.dart';
 import 'package:batch_33a/login/login_screen.dart';
 import 'package:batch_33a/navigation/navigation.dart';
@@ -24,6 +25,8 @@ class RouteGenerator {
 
       case NavigationScreen.routeName:
         return MaterialPageRoute(builder: (_) => const NavigationScreen());
+      case FireStoreExample.routeName:
+        return MaterialPageRoute(builder: (_) => const FireStoreExample());
 
       default:
         _onPageNotFound();

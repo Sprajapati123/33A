@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:batch_33a/firestore_example/firestore_example.dart';
 import 'package:batch_33a/form/form_screen.dart';
 import 'package:batch_33a/route/route_generator.dart';
 import 'package:batch_33a/splash/splash_screen.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(appBarTheme: const AppBarTheme(color: Colors.red)),
-      initialRoute: FormScreen.routeName,
+      initialRoute: FireStoreExample.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

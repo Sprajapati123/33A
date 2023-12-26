@@ -50,9 +50,12 @@ class _FormScreenState extends State<FormScreen> {
                                     IconButton(
                                         onPressed: () async {
                                           setState(() {
-                                            fnameController.text = values[index]['firstname'];
-                                            lnameController.text = values[index]['lastname'];
-                                            emailController.text = values[index]['email'];
+                                            fnameController.text =
+                                                values[index]['firstname'];
+                                            lnameController.text =
+                                                values[index]['lastname'];
+                                            emailController.text =
+                                                values[index]['email'];
                                           });
                                           showDialog(
                                             context: context,
@@ -70,30 +73,42 @@ class _FormScreenState extends State<FormScreen> {
                                                           }
                                                           return null;
                                                         },
-                                                        controller: fnameController),
+                                                        controller:
+                                                            fnameController),
                                                     Text("last name"),
                                                     TextFormField(
-                                                        controller: lnameController),
+                                                        controller:
+                                                            lnameController),
                                                     Text("email"),
                                                     TextFormField(
-                                                        controller: emailController),
-
-                                                    ElevatedButton(onPressed: () async{
-                                                      var data = {
-                                                        "firstname": fnameController.text,
-                                                        "lastname": lnameController.text,
-                                                        "email": emailController.text,
-                                                      };
-                                                      await database
-                                                          .ref('contact')
-                                                          .child(keys[index])
-                                                          .update(data)
-                                                          .then((value) {
-                                                        // show success message to user
-                                                      }).onError((error, stackTrace) {
-                                                        //show error to user
-                                                      });
-                                                    }, child: Text("update")),
+                                                        controller:
+                                                            emailController),
+                                                    ElevatedButton(
+                                                        onPressed: () async {
+                                                          var data = {
+                                                            "firstname":
+                                                                fnameController
+                                                                    .text,
+                                                            "lastname":
+                                                                lnameController
+                                                                    .text,
+                                                            "email":
+                                                                emailController
+                                                                    .text,
+                                                          };
+                                                          await database
+                                                              .ref('contact')
+                                                              .child(
+                                                                  keys[index])
+                                                              .update(data)
+                                                              .then((value) {
+                                                            // show success message to user
+                                                          }).onError((error,
+                                                                  stackTrace) {
+                                                            //show error to user
+                                                          });
+                                                        },
+                                                        child: Text("update")),
                                                   ],
                                                 ),
                                               ),
