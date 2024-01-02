@@ -48,32 +48,43 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-
                                 IconButton(
                                     icon: Icon(Icons.edit),
                                     onPressed: () {
                                       setState(() {
                                         emailController.text = e['email'];
                                       });
-                                      showDialog(context: context, builder: (context) {
-                                        return AlertDialog(
-                                          title: Text("Edit"),
-                                          content: Container(
-                                            height: 500,
-                                            child: Column(
-                                              children: [
-                                                TextFormField(controller: emailController,),
-                                              ElevatedButton(onPressed: (){
-                                                var data = {
-                                                  "email": emailController.text,
-                                                };
-                                                firestore.collection('users').doc(e.id).update(data);
-                                              }, child: Text("Submit"))
-                                              ],
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            title: Text("Edit"),
+                                            content: Container(
+                                              height: 500,
+                                              child: Column(
+                                                children: [
+                                                  TextFormField(
+                                                    controller: emailController,
+                                                  ),
+                                                  ElevatedButton(
+                                                      onPressed: () {
+                                                        var data = {
+                                                          "email":
+                                                              emailController
+                                                                  .text,
+                                                        };
+                                                        firestore
+                                                            .collection('users')
+                                                            .doc(e.id)
+                                                            .update(data);
+                                                      },
+                                                      child: Text("Submit"))
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },);
+                                          );
+                                        },
+                                      );
                                     }),
                                 IconButton(
                                     icon: Icon(Icons.delete),
@@ -90,11 +101,11 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                 );
               },
             ),
-            Text("first name"),
+            const Text("first name"),
             TextFormField(controller: fnameController),
-            Text("last name"),
+            const Text("last name"),
             TextFormField(controller: lnameController),
-            Text("email"),
+            const Text("email"),
 
             TextFormField(controller: emailController),
             ElevatedButton(

@@ -1,3 +1,4 @@
+import 'package:batch_33a/model/user_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -161,16 +162,15 @@ class _FormScreenState extends State<FormScreen> {
               ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      var data = {
-                        "firstname": fnameController.text,
-                        "lastname": lnameController.text,
-                        "email": emailController.text,
-                      };
+                      UserModel model = UserModel(
+                          email: emailController.text,
+                          firstname: fnameController.text,
+                          lastname: lnameController.text);
                       await database
                           .ref()
                           .child("contact")
                           .push()
-                          .set(data)
+                          .set(model.toJson())
                           .then((value) {
                         fnameController.clear();
                         lnameController.clear();
