@@ -1,3 +1,4 @@
+import 'package:batch_33a/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -41,63 +42,65 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                 return ListView(
                   physics: const ScrollPhysics(),
                   shrinkWrap: true,
-                  children: snapshot.data!.docs
-                      .map((DocumentSnapshot e) => ListTile(
-                            title: Text(e['email']),
-                            subtitle: Text(e['firstname']),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {
-                                      setState(() {
-                                        emailController.text = e['email'];
-                                      });
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Text("Edit"),
-                                            content: Container(
-                                              height: 500,
-                                              child: Column(
-                                                children: [
-                                                  TextFormField(
-                                                    controller: emailController,
-                                                  ),
-                                                  ElevatedButton(
-                                                      onPressed: () {
-                                                        var data = {
-                                                          "email":
-                                                              emailController
-                                                                  .text,
-                                                        };
-                                                        firestore
-                                                            .collection('users')
-                                                            .doc(e.id)
-                                                            .update(data);
-                                                      },
-                                                      child: Text("Submit"))
-                                                ],
-                                              ),
+                  children: snapshot.data!.docs.map((DocumentSnapshot e) {
+                    UserModel user =
+                        UserModel.fromJson(e.data() as Map<String, dynamic>);
+                    return ListTile(
+                      title: Text(user.email),
+                      // ?? means if null
+                      subtitle: Text(user.firstname ?? "n/a"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                setState(() {
+                                  emailController.text = e['email'];
+                                });
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Edit"),
+                                      content: Container(
+                                        height: 500,
+                                        child: Column(
+                                          children: [
+                                            TextFormField(
+                                              controller: emailController,
                                             ),
-                                          );
-                                        },
-                                      );
-                                    }),
-                                IconButton(
-                                    icon: Icon(Icons.delete),
-                                    onPressed: () {
-                                      firestore
-                                          .collection('users')
-                                          .doc(e.id)
-                                          .delete();
-                                    }),
-                              ],
-                            ),
-                          ))
-                      .toList(),
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  var data = {
+                                                    "email":
+                                                        emailController.text,
+                                                  };
+                                                  firestore
+                                                      .collection('users')
+                                                      .doc(e.id)
+                                                      .update(data);
+                                                },
+                                                child: Text("Submit"))
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                          IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                firestore
+                                    .collection('users')
+                                    .doc(e.id)
+                                    .delete();
+                              }),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 );
               },
             ),
@@ -108,6 +111,36 @@ class _FireStoreExampleState extends State<FireStoreExample> {
             const Text("email"),
 
             TextFormField(controller: emailController),
+
+            ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Browse image"),
+                        content: Container(
+                          height: 150,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: Image.asset(
+                                "assets/images/camera.png",
+                                height: 100,
+                              )),
+                              Expanded(
+                                  child: Image.asset(
+                                "assets/images/gallery.png",
+                                height: 100,
+                              )),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text("Choose image")),
             ElevatedButton(
                 onPressed: () async {
                   // FirebaseDatabase.instance.ref().child("").set(value);

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(appBarTheme: const AppBarTheme(color: Colors.red)),
-      initialRoute: FormScreen.routeName,
+      initialRoute: FireStoreExample.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
