@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:batch_33a/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class FireStoreExample extends StatefulWidget {
   const FireStoreExample({super.key});
@@ -17,6 +20,22 @@ class _FireStoreExampleState extends State<FireStoreExample> {
   final emailController = TextEditingController();
 
   final firestore = FirebaseFirestore.instance;
+
+  File? file;
+  String? tempUrl;
+
+  void pickImage(ImageSource source) async {
+    var selected =
+        await ImagePicker().pickImage(source: source, imageQuality: 100);
+    if (selected == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("No image selected")));
+    } else {
+      setState(() {
+        file = File(selected.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,20 +137,30 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Browse image"),
-                        content: Container(
+                        title: const Text("Browse image"),
+                        content: SizedBox(
                           height: 150,
                           child: Row(
                             children: [
                               Expanded(
-                                  child: Image.asset(
-                                "assets/images/camera.png",
-                                height: 100,
+                                  child: InkWell(
+                                onTap: () {
+                                  pickImage(ImageSource.camera);
+                                },
+                                child: Image.asset(
+                                  "assets/images/camera.png",
+                                  height: 100,
+                                ),
                               )),
                               Expanded(
-                                  child: Image.asset(
-                                "assets/images/gallery.png",
-                                height: 100,
+                                  child: InkWell(
+                                onTap: () {
+                                  pickImage(ImageSource.gallery);
+                                },
+                                child: Image.asset(
+                                  "assets/images/gallery.png",
+                                  height: 100,
+                                ),
                               )),
                             ],
                           ),
