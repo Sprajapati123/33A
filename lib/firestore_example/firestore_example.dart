@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:batch_33a/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -34,7 +35,24 @@ class _FireStoreExampleState extends State<FireStoreExample> {
       setState(() {
         file = File(selected.path);
       });
+      saveToStorage();
     }
+  }
+
+  FirebaseStorage storage = FirebaseStorage.instance;
+  saveToStorage() async {
+    String filename = file!.path.split('/').last;
+    var photo = await storage
+        .ref()
+        .child("users")
+        .child(filename)
+        .putFile(File(file!.path));
+    String url = await photo.ref.getDownloadURL();
+    print("This is url");
+    print(url);
+    setState(() {
+      tempUrl = url;
+    });
   }
 
   @override
@@ -65,6 +83,7 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                     UserModel user =
                         UserModel.fromJson(e.data() as Map<String, dynamic>);
                     return ListTile(
+                      leading: Image.network(user.image.toString()),
                       title: Text(user.email),
                       // ?? means if null
                       subtitle: Text(user.firstname ?? "n/a"),
@@ -131,6 +150,13 @@ class _FireStoreExampleState extends State<FireStoreExample> {
 
             TextFormField(controller: emailController),
 
+            file == null
+                ? SizedBox()
+                : Image.file(
+                    file!,
+                    height: 100,
+                    width: 100,
+                  ),
             ElevatedButton(
                 onPressed: () {
                   showDialog(
@@ -177,6 +203,7 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                     "firstname": fnameController.text,
                     "lastname": lnameController.text,
                     "email": emailController.text,
+                    "image": tempUrl,
                   };
                   firestore.collection('users').doc().set(data);
                   // firestore.collection('users').doc("1").set(data);
