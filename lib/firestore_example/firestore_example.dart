@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:batch_33a/constants/app_image.dart';
 import 'package:batch_33a/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -174,7 +175,7 @@ class _FireStoreExampleState extends State<FireStoreExample> {
                                   pickImage(ImageSource.camera);
                                 },
                                 child: Image.asset(
-                                  "assets/images/camera.png",
+                                  pngCamera,
                                   height: 100,
                                 ),
                               )),
