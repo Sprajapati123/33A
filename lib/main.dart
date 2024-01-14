@@ -2,19 +2,21 @@ import 'dart:math';
 
 import 'package:batch_33a/firestore_example/firestore_example.dart';
 import 'package:batch_33a/form/form_screen.dart';
+import 'package:batch_33a/providers/user_view_model.dart';
 import 'package:batch_33a/route/route_generator.dart';
 import 'package:batch_33a/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dashboard/dashboard.dart';
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-   );
+  );
   runApp(MyApp());
 }
 
@@ -23,11 +25,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(appBarTheme: const AppBarTheme(color: Colors.red)),
-      initialRoute: FireStoreExample.routeName,
-      onGenerateRoute: RouteGenerator.generateRoute,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=> UserViewModel()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(appBarTheme: const AppBarTheme(color: Colors.red)),
+        initialRoute: FireStoreExample.routeName,
+        onGenerateRoute: RouteGenerator.generateRoute,
+      ),
     );
   }
 }

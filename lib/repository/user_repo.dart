@@ -21,7 +21,19 @@ class UserRepo {
     }
     return null;
   }
-  //get
+
+  ///get
+
+  Future<List<QueryDocumentSnapshot<UserModel>>> getData() async {
+    try {
+      final response = (await instance.get()).docs;
+      return response;
+    } on Exception catch (e) {
+      // TODO
+      print(e.toString());
+    }
+    return [];
+  }
 
 //post
 //update
