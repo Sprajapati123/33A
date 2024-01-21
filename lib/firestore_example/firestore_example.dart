@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../service/local_notification_service.dart';
+
 class FireStoreExample extends StatefulWidget {
   const FireStoreExample({super.key});
   static const String routeName = "/firestore";
@@ -82,6 +84,16 @@ class _FireStoreExampleState extends State<FireStoreExample> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ElevatedButton(
+                  onPressed: () {
+                    NotificationService.display(
+                        title: "Holiday notice",
+                        body: "This is to notify that there is holiday",
+                        logo: "assets/images/camera.png",
+                        image: "assets/images/camera.png");
+                    ;
+                  },
+                  child: Text("send notification")),
               Column(
                 children: user.data
                     .map((e) => ListTile(

@@ -4,6 +4,7 @@ import 'package:batch_33a/firestore_example/firestore_example.dart';
 import 'package:batch_33a/form/form_screen.dart';
 import 'package:batch_33a/providers/user_view_model.dart';
 import 'package:batch_33a/route/route_generator.dart';
+import 'package:batch_33a/service/local_notification_service.dart';
 import 'package:batch_33a/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService.initialize();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
